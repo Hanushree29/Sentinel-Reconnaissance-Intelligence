@@ -1,0 +1,369 @@
+/* ============= MAIN ALERT CARD ============= */
+
+.alert-box {
+  position: relative;
+  max-width: 1180px;
+  width: 100%;
+  margin: 10px auto;
+  border-radius: 18px;
+  border: 2px solid rgba(239, 68, 68, 0.9);
+  background: #ffffff;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 18px 35px rgba(15, 23, 42, 0.25);
+  animation: alertOutlinePulse 0.45s ease-in-out infinite;
+}
+
+/* Glow background */
+.alert-box::before {
+  content: "";
+  position: absolute;
+  inset: -48px;
+  background:
+    radial-gradient(circle at top left, rgba(250, 100, 100, 0.9), transparent 60%),
+    radial-gradient(circle at bottom right, rgba(185, 30, 30, 0.7), transparent 40%);
+  filter: blur(24px);
+  opacity: 0.55;
+  z-index: -1;
+  animation: alertEdgeGlow 0.45s ease-in-out infinite;
+}
+
+/* ============= HEADER BAR ============= */
+
+.alert-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #dc2626, #7f1d1d);
+  padding: 10px 18px;
+  color: #f9fafb;
+  border-radius: 18px 18px 0 0;
+  box-sizing: border-box;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.header-alert-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 2px solid rgba(254, 226, 226, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  background: rgba(248, 250, 252, 0.18);
+  flex-shrink: 0;
+}
+
+.header-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.header-title {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.header-subtitle {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+/* right side: LIVE • 2 mins ago • ID: ... */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.header-live-pill {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(248, 250, 252, 0.18);
+  border: 1px solid rgba(254, 226, 226, 0.9);
+  margin-right: 4px;
+}
+
+.header-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #facc15;
+  box-shadow: 0 0 0 3px rgba(252, 211, 77, 0.35);
+}
+
+.alert-meta-inline {
+  font-size: 0.8rem;
+  background: rgba(248, 250, 252, 0.14);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+/* ============= BODY & 3-COLUMN LAYOUT ============= */
+
+.alert-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: radial-gradient(circle at top left, #fff7ed 0, #ffffff 35%, #eef2ff 100%);
+  border-radius: 0 0 18px 18px;
+  padding: 12px 12px 10px;
+  box-sizing: border-box;
+}
+
+/* Equal height 3-col layout */
+.alert-layout-3 {
+  display: grid;
+  grid-template-columns: 1.1fr 1.1fr 0.9fr;
+  gap: 12px;
+  align-items: stretch;
+  min-height: 220px;
+}
+
+.alert-left,
+.alert-middle,
+.alert-right {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ============= FOOTER BUTTONS ============= */
+
+.alert-footer {
+  display: flex;
+  justify-content: flex-end;          /* 🔹 align buttons to the right */
+  gap: 10px;
+  padding: 4px 4px 4px;
+  box-sizing: border-box;
+
+  /* 🔹 Only occupy the width under Summary + AI (approx 2/3 of card) */
+  max-width: 70%;
+  margin-left: auto;                  /* push to the right side */
+  margin-right: 4px;
+}
+
+.btn {
+  font-size: 0.84rem;
+  padding: 9px 20px;                  /* 🔹 more width */
+  border-radius: 999px;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+  white-space: nowrap;
+  min-width: 140px;                   /* 🔹 consistent button width */
+  text-align: center;
+}
+
+.btn:active {
+  transform: scale(0.97);
+  box-shadow: none;
+}
+
+/* Primary: Deploy QRT */
+.dispatch-btn {
+  background: #26dc6f;
+  color: #000000;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+
+.dispatch-btn:hover {
+  background: #1c72b9;
+}
+
+/* Secondary: Open Multi-Cam View */
+.light-btn {
+  background: #111827;
+  color: #e5e7eb;
+}
+
+.light-btn:hover {
+  background: #020617;
+}
+
+/* Tertiary: False Positive / Non-critical */
+.ghost-btn {
+  background: #ec5050;
+  border: 1px solid #9ca3af;
+  color: #f0f6ff;
+}
+
+.ghost-btn:hover {
+  background: #67024e;
+}
+
+/* ============= ANIMATIONS (FASTER) ============= */
+
+@keyframes alertOutlinePulse {
+  0%, 100% {
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.4);
+  }
+  50% {
+    border-color: rgba(248, 113, 113, 1);
+    box-shadow: 0 0 12px 6px rgba(248, 113, 113, 0.9);
+  }
+}
+
+@keyframes alertEdgeGlow {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+/* ============= RESPONSIVE STYLES ============= */
+
+/* Tablets / small laptops */
+@media (max-width: 1024px) {
+  .alert-box {
+    margin: 10px 12px;
+  }
+
+  .alert-layout-3 {
+    grid-template-columns: 1.1fr 1.1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "left middle"
+      "right right";
+  }
+
+  .alert-left {
+    grid-area: left;
+  }
+
+  .alert-middle {
+    grid-area: middle;
+  }
+
+  .alert-right {
+    grid-area: right;
+  }
+
+  .alert-body {
+    padding: 10px;
+  }
+
+  .alert-box::before {
+    inset: -36px;
+  }
+
+  /* Footer still right-side but a bit wider on tablet */
+  .alert-footer {
+    max-width: 80%;
+    margin-right: 0;
+  }
+}
+
+/* Large phones / portrait tablets */
+@media (max-width: 768px) {
+  .alert-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+
+  .header-title {
+    font-size: 0.9rem;
+  }
+
+  .header-right {
+    margin-left: auto;
+    font-size: 0.75rem;
+  }
+
+  .alert-layout-3 {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "left"
+      "middle"
+      "right";
+    min-height: auto;
+  }
+
+  .alert-body {
+    padding: 10px 8px 8px;
+    gap: 8px;
+  }
+
+  /* On mobile-ish widths, let footer be full width and centered again */
+  .alert-footer {
+    max-width: 100%;
+    margin: 0;
+    justify-content: center;
+    padding-top: 6px;
+  }
+
+  .btn {
+    font-size: 0.78rem;
+    padding: 7px 14px;
+    min-width: 120px;
+  }
+
+  .alert-box::before {
+    inset: -30px;
+    filter: blur(20px);
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .alert-box {
+    border-radius: 14px;
+    margin: 8px 6px;
+  }
+
+  .alert-header {
+    border-radius: 14px 14px 0 0;
+  }
+
+  .header-left {
+    width: 100%;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .alert-body {
+    padding: 8px 6px 6px;
+  }
+
+  .alert-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .alert-footer .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn {
+    font-size: 0.78rem;
+  }
+
+  .alert-box::before {
+    inset: -24px;
+    filter: blur(18px);
+  }
+}

@@ -1,0 +1,105 @@
+.right-sidebar {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.live-feed-section, .alerts-section, .alert-details-section {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.live-feed-section h3, .alerts-section h3 {
+  color: #00ff00;
+  margin: 0 0 15px 0;
+  font-size: 16px;
+}
+
+.timestamp, .storage-info {
+  margin-bottom: 15px;
+}
+
+.timestamp div:first-child, .storage-info div:first-child {
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.timestamp div:last-child, .storage-info div:last-child {
+  color: #cccccc;
+  font-size: 12px;
+}
+
+.live-indicator {
+  background-color: #ff4444;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.alert-item {
+  padding: 10px;
+  background-color: #2a2a2a;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border-left: 3px solid #ff4444;
+}
+
+.alert-type {
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.alert-location, .alert-time {
+  color: #cccccc;
+  font-size: 12px;
+}
+
+.alert-detail-item {
+  padding: 15px;
+  background-color: #2a2a2a;
+  border-radius: 6px;
+  border-left: 3px solid #ff4444;
+}
+
+.alert-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.alert-details {
+  color: #cccccc;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.alert-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.view-btn, .mark-safe-btn {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.view-btn {
+  background-color: #0066ff;
+  color: white;
+}
+
+.mark-safe-btn {
+  background-color: #00ff00;
+  color: #000;
+}
