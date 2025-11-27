@@ -1,49 +1,51 @@
+/* Reset / base */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
 }
 
 .app {
   display: flex;
   height: 100vh;
-  background-color: #f8f9fa;
-  color: #2c3e50;
-  font-family: 'Arial', sans-serif;
-  overflow: hidden;
+  width: 100vw;
+  overflow: hidden; /* scrolling only inside columns */
+  background: #050816; /* or var(--bg-page) */
+  color: #e5e7eb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 }
 
-/* Left Sidebar */
+/* ===== Left sidebar (component <Sidebar /> should use className="sidebar") ===== */
 .sidebar {
-  width: 280px;
-  background-color: #ffffff;
-  border-right: 1px solid #dee2e6;
-  display: flex;
-  flex-direction: column;
+  width: 260px;          /* fixed left width */
   flex-shrink: 0;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Main Dashboard - Takes remaining space */
-.dashboard {
-  flex: 1;
-  overflow-y: auto;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f8f9fa 100%);
-  min-width: 0; /* Important for flexbox shrinking */
-}
-
-/* Right Sidebar */
-.right-sidebar {
-  width: 320px;
-  background-color: #ffffff;
-  border-left: 1px solid #dee2e6;
-  flex-shrink: 0;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Ensure all components take full height */
-.sidebar,
-.dashboard,
-.right-sidebar {
   height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+}
+
+/* ===== Main content (center) ===== */
+.main-content {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  background: #ffffff;
+}
+
+/* ===== Right sidebar (component should use className="right-sidebar") ===== */
+.right-sidebar {
+  width: 320px;          /* fixed right width */
+  flex-shrink: 0;
+  height: 100vh;
+  background: #e5e6ee;
+  border-left: 1px solid rgba(148, 163, 184, 0.25);
+  padding: 16px 18px;
+  overflow-y: auto;
 }
