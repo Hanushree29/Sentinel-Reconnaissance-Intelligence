@@ -3,14 +3,8 @@ import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Sparkles,
-  FileVideo,
-  Clock,
-  Download,
-  Play,
-  Pause,
-} from "lucide-react";
+import { Sparkles } from "lucide-react";
+import VideoAnalysisCard from "./VideoAnalysisCard";
 
 export default function AnalysisView({
   uploadedFiles,
@@ -28,7 +22,6 @@ export default function AnalysisView({
   ]);
   const [query, setQuery] = useState("");
   const [isProcessingQuery, setIsProcessingQuery] = useState(false);
-  const [currentPlayingVideo, setCurrentPlayingVideo] = useState(null);
 
   const handleSendQuery = async () => {
     if (!query.trim()) return;
@@ -63,57 +56,6 @@ export default function AnalysisView({
       e.preventDefault();
       handleSendQuery();
     }
-  };
-
-  const handleDownloadPDF = () => {
-    const pdfContent = `
-NSG AI Video Analysis Report
-Generated: ${new Date().toLocaleString()}
-Total Files Analyzed: ${uploadedFiles.length}
-
-${analysisResults
-  .map(
-    (result) => `
-FILE: ${result.fileName}
-Duration: ${result.duration}
-Threat Level: ${result.threatLevel.toUpperCase()}
-Confidence: ${result.confidence}%
-
-TIMELINE:
-${result.timeline
-  .map((item) => `  ${item.time} - ${item.event}`)
-  .join("\n")}
-
-SUMMARY:
-${result.summary}
-
-${"=".repeat(50)}
-`
-  )
-  .join("")}
-
-DETECTED FRAMES:
-${detectedFrames
-  .map(
-    (frame) => `
-Video: ${frame.videoName}
-Timestamp: ${frame.timestamp}
-Duration: ${frame.duration}
-Description: ${frame.description}
-`
-  )
-  .join("")}
-    `;
-
-    const blob = new Blob([pdfContent], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `video-analysis-report-${new Date().getTime()}.pdf`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
   };
 
   return (
@@ -187,137 +129,15 @@ Description: ${frame.description}
         </Card>
       </div>
 
-      {/* Right: Analysis results */}
+      {/* Right: Per-video analysis cards */}
       <div className="analysis-right">
         {analysisResults.map((result, index) => (
-          <Card key={index} className="analysis-result-card">
-            <div className="analysis-result-header">
-              <div className="analysis-result-left">
-                <FileVideo className="icon-sm tactical-colour" />
-                <h3 className="analysis-result-title">{result.fileName}</h3>
-              </div>
-              <div className="analysis-result-meta">
-                <div
-                  className={
-                    result.threatLevel === "high"
-                      ? "pill pill-danger"
-                      : result.threatLevel === "medium"
-                      ? "pill pill-warning"
-                      : "pill pill-success"
-                  }
-                >
-                  {result.threatLevel.toUpperCase()} THREAT
-                </div>
-                <div className="analysis-confidence">
-                  Confidence: {result.confidence}%
-                </div>
-              </div>
-            </div>
-
-            <div className="analysis-result-body">
-              <div className="analysis-column">
-                <div className="analysis-section">
-                  <h4 className="section-title">Event Timeline</h4>
-                  <div className="timeline-list">
-                    {result.timeline.map((item, idx) => (
-                      <div key={idx} className="timeline-row">
-                        <span className="timeline-time">{item.time}</span>
-                        <span className="timeline-event">{item.event}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="analysis-section">
-                  <h4 className="section-title">Video Duration</h4>
-                  <div className="duration-row">
-                    <Clock className="icon-xs tactical-colour" />
-                    <span className="duration-text">{result.duration}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="analysis-column">
-                <h4 className="section-title">Key Moment Snapshots</h4>
-                <div className="snapshot-grid">
-                  {result.keyFrames.map((frame, i) => (
-                    <div key={i} className="snapshot-tile">
-                      <span className="snapshot-label">Frame {i + 1}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="summary-panel">
-              <h4 className="section-title">Summary Report</h4>
-              <p className="summary-text">{result.summary}</p>
-            </div>
-          </Card>
+          <VideoAnalysisCard
+            key={index}
+            result={result}
+            detectedFrames={detectedFrames}
+          />
         ))}
-
-        {/* Detected frames section */}
-        {detectedFrames.length > 0 && (
-          <Card className="analysis-detected-card">
-            <div className="detected-header">
-              <div className="detected-title-wrap">
-                <Sparkles className="icon-sm tactical-colour" />
-                <h3 className="detected-title">Detected Frames & Clips</h3>
-              </div>
-              <Button onClick={handleDownloadPDF} className="primary-btn">
-                <Download className="icon-sm icon-left" />
-                <span>Download Full Report</span>
-              </Button>
-            </div>
-
-            <div className="detected-grid">
-              {detectedFrames.map((frame, index) => (
-                <Card key={index} className="detected-card">
-                  <div className="detected-preview">
-                    <div className="detected-preview-label">Video Preview</div>
-                    <Button
-                      size="sm"
-                      className="preview-play-btn"
-                      onClick={() =>
-                        setCurrentPlayingVideo(
-                          currentPlayingVideo === frame.videoName
-                            ? null
-                            : frame.videoName
-                        )
-                      }
-                    >
-                      {currentPlayingVideo === frame.videoName ? (
-                        <Pause className="icon-xs" />
-                      ) : (
-                        <Play className="icon-xs" />
-                      )}
-                    </Button>
-                  </div>
-
-                  <div className="detected-info">
-                    <div className="detected-title-row">
-                      <h4 className="detected-video-name">
-                        {frame.videoName}
-                      </h4>
-                      <span className="detected-duration-pill">
-                        {frame.duration}
-                      </span>
-                    </div>
-
-                    <div className="detected-time-row">
-                      <Clock className="icon-xs muted-colour" />
-                      <span className="detected-time">{frame.timestamp}</span>
-                    </div>
-
-                    <p className="detected-description">
-                      {frame.description}
-                    </p>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </Card>
-        )}
       </div>
     </div>
   );

@@ -149,7 +149,7 @@ export default function UploadArea({
 
   const handleUserQuerySubmit = () => {
     if (!userQuery.trim()) return;
-    // You can later wire this to influence analysis parameters
+    // Later: wire this to influence analysis parameters
     setUserQuery("");
   };
 
